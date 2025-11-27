@@ -1,5 +1,6 @@
 {
   "name": "seismicwatch",
+  "homepage": "https://samik-saha.github.io/SeismicWatch/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
