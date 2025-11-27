@@ -40,6 +40,12 @@ const EarthquakeMap: React.FC<Props> = ({ data, worldData, onSelectQuake, select
 
     const { width, height } = dimensions;
 
+    // Helper to safely get magnitude
+    const getMag = (d: EarthquakeFeature) => {
+      const val = Number(d.properties.mag);
+      return isNaN(val) ? 0 : Math.max(0, val);
+    };
+
     // Map Projection
     const projection = d3.geoMercator()
       .scale(width / 6.5)
@@ -74,7 +80,7 @@ const EarthquakeMap: React.FC<Props> = ({ data, worldData, onSelectQuake, select
     // Sort by magnitude so larger ones are on top? No, smaller on top usually better for visibility, or opacity.
     // Let's sort large to small so large are background, small are foreground (easier to click precision)
     // Or render big semi-transparent ones.
-    const sortedData = [...data].sort((a, b) => b.properties.mag - a.properties.mag);
+    const sortedData = [...data].sort((a, b) => getMag(b) - getMag(a));
 
     g.selectAll("circle")
       .data(sortedData)
@@ -82,8 +88,8 @@ const EarthquakeMap: React.FC<Props> = ({ data, worldData, onSelectQuake, select
       .append("circle")
       .attr("cx", d => projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])?.[0] || 0)
       .attr("cy", d => projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])?.[1] || 0)
-      .attr("r", d => Math.max(2, Math.pow(d.properties.mag, 1.5))) // Non-linear radius
-      .attr("fill", d => getMagnitudeColor(d.properties.mag))
+      .attr("r", d => Math.max(2, Math.pow(getMag(d), 1.5)))
+      .attr("fill", d => getMagnitudeColor(getMag(d)))
       .attr("fill-opacity", 0.6)
       .attr("stroke", d => d.id === selectedQuakeId ? "#ffffff" : "none")
       .attr("stroke-width", 2)
@@ -97,13 +103,15 @@ const EarthquakeMap: React.FC<Props> = ({ data, worldData, onSelectQuake, select
 
     // Add pulsing effect for the selected quake if any
     if (selectedQuakeId) {
-       const selected = sortedData.find(d => d.id === selectedQuakeId);
-       if (selected) {
-         const [cx, cy] = projection([selected.geometry.coordinates[0], selected.geometry.coordinates[1]]) || [0,0];
-         g.append("circle")
+      const selected = sortedData.find(d => d.id === selectedQuakeId);
+      if (selected) {
+        const [cx, cy] = projection([selected.geometry.coordinates[0], selected.geometry.coordinates[1]]) || [0, 0];
+        const r = Math.max(2, Math.pow(getMag(selected), 1.5));
+
+        g.append("circle")
           .attr("cx", cx)
           .attr("cy", cy)
-          .attr("r", Math.max(2, Math.pow(selected.properties.mag, 1.5)))
+          .attr("r", r)
           .attr("fill", "none")
           .attr("stroke", "#ffffff")
           .attr("stroke-width", 2)
@@ -111,19 +119,19 @@ const EarthquakeMap: React.FC<Props> = ({ data, worldData, onSelectQuake, select
           .transition()
           .duration(1500)
           .ease(d3.easeLinear)
-          .attr("r", Math.max(2, Math.pow(selected.properties.mag, 1.5)) * 3)
+          .attr("r", r * 3)
           .attr("stroke-opacity", 0)
           .on("end", function repeat() {
-              d3.select(this)
-                .attr("r", Math.max(2, Math.pow(selected.properties.mag, 1.5)))
-                .attr("stroke-opacity", 1)
-                .transition()
-                .duration(1500)
-                .attr("r", Math.max(2, Math.pow(selected.properties.mag, 1.5)) * 3)
-                .attr("stroke-opacity", 0)
-                .on("end", repeat);
+            d3.select(this)
+              .attr("r", r)
+              .attr("stroke-opacity", 1)
+              .transition()
+              .duration(1500)
+              .attr("r", r * 3)
+              .attr("stroke-opacity", 0)
+              .on("end", repeat);
           });
-       }
+      }
     }
 
   }, [data, worldData, dimensions, selectedQuakeId, onSelectQuake]);
