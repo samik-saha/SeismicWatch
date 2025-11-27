@@ -1,0 +1,5 @@
+{
+  "name": "SeismicWatch",
+  "description": "Real-time global earthquake visualization dashboard powered by USGS data.",
+  "requestFramePermissions": []
+}
