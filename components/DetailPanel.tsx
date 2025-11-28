@@ -21,8 +21,8 @@ const DetailPanel: React.FC<Props> = ({ quake, onClose }) => {
           <h2 className="text-xl font-bold text-white leading-snug">{quake.properties.title}</h2>
           <span className="text-xs text-slate-400 font-mono mt-1 block">{quake.id}</span>
         </div>
-        <button 
-          onClick={onClose} 
+        <button
+          onClick={onClose}
           className="text-slate-400 hover:text-white transition-colors p-1 hover:bg-slate-700 rounded"
         >
           <X size={24} />
@@ -31,13 +31,13 @@ const DetailPanel: React.FC<Props> = ({ quake, onClose }) => {
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        
+
         {/* Key Stats */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
-            <div className="text-slate-400 text-xs mb-1 flex items-center gap-2"><Activity size={14}/> Magnitude</div>
-            <div 
-              className="text-3xl font-bold" 
+            <div className="text-slate-400 text-xs mb-1 flex items-center gap-2"><Activity size={14} /> Magnitude</div>
+            <div
+              className="text-3xl font-bold"
               style={{ color: getMagnitudeColor(quake.properties.mag) }}
             >
               {quake.properties.mag.toFixed(2)}
@@ -45,9 +45,9 @@ const DetailPanel: React.FC<Props> = ({ quake, onClose }) => {
             <div className="text-xs text-slate-500 mt-1 uppercase">{quake.properties.magType}</div>
           </div>
           <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
-            <div className="text-slate-400 text-xs mb-1 flex items-center gap-2"><ArrowDown size={14}/> Depth</div>
+            <div className="text-slate-400 text-xs mb-1 flex items-center gap-2"><ArrowDown size={14} /> Depth</div>
             <div className="text-3xl font-bold text-slate-200">
-              {quake.geometry.coordinates[2]} <span className="text-sm font-normal text-slate-500">km</span>
+              {quake.geometry.coordinates[2].toFixed(2)} <span className="text-sm font-normal text-slate-500">km</span>
             </div>
             <div className="text-xs text-slate-500 mt-1">Below Surface</div>
           </div>
@@ -86,9 +86,9 @@ const DetailPanel: React.FC<Props> = ({ quake, onClose }) => {
 
       {/* Footer */}
       <div className="p-4 border-t border-slate-800 bg-slate-900 flex justify-between items-center">
-         <a 
-          href={quake.properties.url} 
-          target="_blank" 
+        <a
+          href={quake.properties.url}
+          target="_blank"
           rel="noopener noreferrer"
           className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-2"
         >
@@ -100,8 +100,8 @@ const DetailPanel: React.FC<Props> = ({ quake, onClose }) => {
 };
 
 // Simple Activity icon placeholder for the component
-const Activity: React.FC<{size?: number, className?: string}> = ({size = 24, className = ""}) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+const Activity: React.FC<{ size?: number, className?: string }> = ({ size = 24, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
 );
 
 export default DetailPanel;

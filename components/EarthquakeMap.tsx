@@ -99,7 +99,7 @@ const EarthquakeMap: React.FC<Props> = ({ data, worldData, onSelectQuake, select
         onSelectQuake(d);
       })
       .append("title") // Simple browser tooltip
-      .text(d => `${d.properties.title}\nDepth: ${d.geometry.coordinates[2]}km`);
+      .text(d => `${d.properties.title}\nDepth: ${d.geometry.coordinates[2].toFixed(2)}km`);
 
     // Add pulsing effect for the selected quake if any
     if (selectedQuakeId) {

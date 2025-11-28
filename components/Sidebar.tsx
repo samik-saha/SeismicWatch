@@ -22,31 +22,30 @@ const Sidebar: React.FC<Props> = ({ quakes, onSelect, selectedId }) => {
         {sorted.map(quake => {
           const isSelected = quake.id === selectedId;
           const magColor = getMagnitudeColor(quake.properties.mag);
-          
+
           return (
             <button
               key={quake.id}
               onClick={() => onSelect(quake)}
-              className={`w-full text-left p-4 border-b border-slate-800 transition-all hover:bg-slate-800 ${
-                isSelected ? "bg-slate-800 border-l-4 border-l-blue-500" : "border-l-4 border-l-transparent"
-              }`}
+              className={`w-full text-left p-4 border-b border-slate-800 transition-all hover:bg-slate-800 ${isSelected ? "bg-slate-800 border-l-4 border-l-blue-500" : "border-l-4 border-l-transparent"
+                }`}
             >
               <div className="flex justify-between items-start mb-1">
-                <span 
-                  className="font-bold text-lg" 
+                <span
+                  className="font-bold text-lg"
                   style={{ color: magColor }}
                 >
                   {quake.properties.mag.toFixed(1)}
                 </span>
                 <span className="text-xs text-slate-500 font-mono">
-                  {new Date(quake.properties.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                  {new Date(quake.properties.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </div>
               <div className="text-sm text-slate-300 truncate w-full mb-1">
                 {quake.properties.place}
               </div>
               <div className="flex gap-2 text-[10px] text-slate-500 uppercase tracking-wider">
-                <span>{quake.geometry.coordinates[2]}km Depth</span>
+                <span>{quake.geometry.coordinates[2].toFixed(2)}km Depth</span>
               </div>
             </button>
           );

@@ -1,20 +1,55 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# SeismicWatch
 
-# Run and deploy your AI Studio app
+SeismicWatch is a modern, interactive web application for visualizing global earthquake data. It provides real-time updates from the USGS API, allowing users to track seismic activity around the world through both 2D map and 3D globe visualizations.
 
-This contains everything you need to run your app locally.
+[**View Live Demo**](https://samik-saha.github.io/SeismicWatch/)
 
-View your app in AI Studio: https://ai.studio/apps/drive/1XRYZnDp3tLEKjnKjubQYgLfb3i-xtECc
+## Features
 
-## Run Locally
+-   **Real-time Data**: Fetches the latest earthquake data from the USGS.
+-   **Interactive Visualizations**:
+    -   **Map View**: A detailed 2D map projection.
+    -   **Globe View**: An immersive 3D interactive globe.
+-   **Detailed Insights**: Click on any earthquake to see detailed information, including magnitude, depth, and location.
+-   **Filtering**: Filter earthquakes by time range (Past Hour, Past Day, Past 7 Days, Past 30 Days).
+-   **Responsive Design**: Optimized for both desktop and mobile devices.
 
-**Prerequisites:**  Node.js
+## Getting Started
 
+### Prerequisites
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+-   Node.js (v18.17.0 or higher)
+-   npm
+
+### Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/samik-saha/SeismicWatch.git
+    cd SeismicWatch
+    ```
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+### Running the App
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Open your browser and navigate to `http://localhost:5173` (or the URL shown in your terminal).
+
+### Building for Production
+
+To build the application for production:
+
+```bash
+npm run build
+```
+
+The built artifacts will be in the `dist` directory.
